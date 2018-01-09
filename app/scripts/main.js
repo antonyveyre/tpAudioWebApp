@@ -2,7 +2,7 @@
 'use strict'
 
 let a = document.createElement('audio')
-let canplay = (a.canPlayType('audio/mpeg') == ('probably' || 'maybe'));
+let canplay = (a.canPlayType('audio/mpeg') == 'probably') ||(a.canPlayType('audio/mpeg') == 'maybe');
 let c = canplay ? 0 : 1;
 
 /** PART II **/
