@@ -4,6 +4,7 @@
 let a = document.createElement('audio')
 let canplay = (a.canPlayType('audio/mpeg') == 'probably') ||(a.canPlayType('audio/mpeg') == 'maybe');
 let c = canplay ? 0 : 1;
+let hist = document.querySelector('#history');
 
 /** PART II **/
 function createBlock(arr) {
@@ -50,6 +51,8 @@ function createBlock(arr) {
 document.querySelector('#container').addEventListener('click',buttonClicked);
 function buttonClicked(e){
     let ca =  e.target.querySelector('audio')
+    console.log(e.target.textContent);
+    hist.textContent += e.target.textContent;
     ca.currentTime = 0;
     ca.play();
 }
@@ -59,14 +62,11 @@ function myScript(e){
   for (let i = 0 ; i<soundsKit.length; i++){
     if((soundsKit[i].key.keyCode==e.keyCode) || (soundsKit[i].key.keyCode + 32 ==e.keyCode))
     {
-      //      console.log('GOOOD!!!!!!!!');
-      document.querySelector('#history').textContent += e.key;
-      a.src=soundsKit[i].url.path+soundsKit[i].url.filenames[c]
-      // console.log(a.src);
+      hist.textContent += e.key;
+      a.src=soundsKit[i].url.path+soundsKit[i].url.filenames[c];
       a.play();
     }
   }
-  // console.log(e);
 }
 function init() {
   let container = document.getElementById('container');
