@@ -47,18 +47,11 @@ function createBlock(arr) {
 
 
 
-
 document.querySelector('#container').addEventListener('click',buttonClicked);
 function buttonClicked(e){
-  // console.log('this');
-  // console.log(this);
-  // console.log('e.target');
-  // console.log(e.target);
-  e.target.querySelector('audio').play();
-  // console.log('e.currentTarget');
-  // console.log(e.currentTarget);
-  // console.log('e');
-  // console.log(e);
+    let ca =  e.target.querySelector('audio')
+    ca.currentTime = 0;
+    ca.play();
 }
 
 document.addEventListener("keypress", myScript);
@@ -66,7 +59,7 @@ function myScript(e){
   for (let i = 0 ; i<soundsKit.length; i++){
     if((soundsKit[i].key.keyCode==e.keyCode) || (soundsKit[i].key.keyCode + 32 ==e.keyCode))
     {
-//      console.log('GOOOD!!!!!!!!');
+      //      console.log('GOOOD!!!!!!!!');
       document.querySelector('#history').textContent += e.key;
       a.src=soundsKit[i].url.path+soundsKit[i].url.filenames[c]
       // console.log(a.src);
