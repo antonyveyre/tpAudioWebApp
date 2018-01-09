@@ -5,8 +5,10 @@
 	margin-right: auto;
 	border-radius: 10px;
 	background-color: black;
-
+	padding:auto;
+	text-align: center;
 }
+
 
 
 .block {
