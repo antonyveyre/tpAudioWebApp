@@ -5,6 +5,8 @@ let a = document.createElement('audio')
 let canplay = (a.canPlayType('audio/mpeg') == 'probably') ||(a.canPlayType('audio/mpeg') == 'maybe');
 let c = canplay ? 0 : 1;
 let hist = document.querySelector('#history');
+let buttonReplay = document.querySelector('#buttonReplay')
+let pp
 
 /** PART II **/
 function createBlock(arr) {
@@ -47,27 +49,29 @@ function createBlock(arr) {
 }
 
 
-
-document.querySelector('#container').addEventListener('click',buttonClicked);
 function buttonClicked(e){
-    let ca =  e.target.querySelector('audio')
-    console.log(e.target.textContent);
-    hist.textContent += e.target.textContent;
-    ca.currentTime = 0;
-    ca.play();
+  let ca =  e.target.querySelector('audio')
+  console.log(e.target.textContent);
+  addLettre(e.target.textContent)
+  // hist.textContent += e.target.textContent;
+  ca.currentTime = 0;
+  ca.play();
 }
 
-document.addEventListener("keypress", myScript);
+
 function myScript(e){
   for (let i = 0 ; i<soundsKit.length; i++){
     if((soundsKit[i].key.keyCode==e.keyCode) || (soundsKit[i].key.keyCode + 32 ==e.keyCode))
     {
-      hist.textContent += e.key;
+      addLettre(e.key)
+      // hist.textContent += e.key;
       a.src=soundsKit[i].url.path+soundsKit[i].url.filenames[c];
       a.play();
     }
   }
 }
+
+
 function init() {
   let container = document.getElementById('container');
   // console.log('--- Assignment 2 --- ');
@@ -81,5 +85,52 @@ function init() {
   //end of the loop
 
 }
+
+
+function addLettre(letter){
+  if(hist.textContent.length<21){
+    hist.textContent+=letter;
+  }
+  else {
+    hist.textContent=hist.textContent.substring(1,hist.textContent.length)+letter;
+  }
+}
+
+
+function replayHist(){
+  let durat = 0
+
+  if(hist.textContent.length>0){
+    console.log(hist.textContent.length);
+    for(let j = 0 ; j < hist.textContent.length ; j++){
+      console.log(hist.textContent[j]);
+      console.log(j);
+      for (let i = 0 ; i < soundsKit.length; i++){
+        console.log(soundsKit[i].key.letter==hist.textContent[j]);
+        if(soundsKit[i].key.letter==hist.textContent[j])
+        {
+          let b = document.createElement('audio')
+          console.log(soundsKit[i].key.letter==hist.textContent[j]);
+          b.src=new String(soundsKit[i].url.path+soundsKit[i].url.filenames[c]);
+          b.onloadedmetadata=function(){
+
+            setTimeout(function(){b.play()},durat);
+            console.log('duration =' + durat);
+            durat = Math.round(b.duration*1000);
+
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+document.querySelector('#container').addEventListener('click',buttonClicked);
+document.addEventListener("keypress", myScript);
+buttonReplay.addEventListener('click',replayHist);
 
 init();
